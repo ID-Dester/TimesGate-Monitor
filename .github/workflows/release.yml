@@ -41,7 +41,7 @@ jobs:
       - name: Build and test
         shell: pwsh
         run: |
-          dotnet restore TimesGateMonitor.sln --locked-mode
+          dotnet restore TimesGateMonitor.sln --locked-mode -r win-x64
           dotnet build TimesGateMonitor.sln -c Release --no-restore
           dotnet run --project tests/TimesGateMonitor.Tests -c Release --no-build
 
