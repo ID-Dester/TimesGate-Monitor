@@ -1,0 +1,172 @@
+<Window x:Class="TimesGateMonitor.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TGm — PC Monitor for Divoom Times Gate"
+        Icon="Assets/TGm.ico"
+        Width="1050"
+        Height="550"
+        MinWidth="940"
+        MinHeight="520"
+        Background="Transparent"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Consolas" Foreground="{DynamicResource TextBrush}" UseLayoutRounding="True">
+    <Border BorderThickness="0" Background="{StaticResource WindowBrush}">
+    <Grid x:Name="WindowRoot"><Grid x:Name="MainContent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="62" />
+            <RowDefinition Height="128" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="90" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{StaticResource DeepBrush}" Padding="22,0,8,0"
+                MouseLeftButtonDown="WindowHeader_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Image Source="Assets/TGm-40.png" Width="40" Height="40" VerticalAlignment="Center" AutomationProperties.Name="TGm" />
+
+                <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="TGm" FontWeight="Bold" FontSize="15" />
+                    <TextBlock Text="PC Monitor for Divoom Times Gate · public preview" Foreground="{StaticResource SubtleTextBrush}" FontSize="11" />
+                </StackPanel>
+
+                <Border Grid.Column="2" Background="{DynamicResource WindowBrush}" CornerRadius="0" Padding="11,6" Margin="0,0,12,0" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse x:Name="StatusDot" Width="8" Height="8" Fill="{StaticResource SubtleTextBrush}" Margin="0,0,7,0" />
+                        <TextBlock x:Name="StatusTextBlock" Text="READY · NOT APPLIED" Foreground="{StaticResource MutedTextBrush}" FontSize="11" FontWeight="SemiBold" />
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Top">
+                    <Button Style="{StaticResource WindowChromeButtonStyle}"
+                            ToolTip="Application settings"
+                            Click="ApplicationSettingsButton_Click">
+                        <Viewbox Width="15" Height="15" Stretch="Uniform">
+                            <Path Data="{StaticResource SettingsGearGeometry}" Fill="{DynamicResource MutedTextBrush}" />
+                        </Viewbox>
+                    </Button>
+                    <Button Style="{StaticResource WindowChromeButtonStyle}"
+                            ToolTip="Minimize"
+                            Click="MinimizeWindowButton_Click">
+                        <Path Data="M 0 0 L 10 0" Stroke="{DynamicResource MutedTextBrush}" StrokeThickness="1.4" />
+                    </Button>
+                    <Button Style="{StaticResource WindowCloseButtonStyle}"
+                            ToolTip="Close"
+                            Click="CloseWindowButton_Click">
+                        <Path Data="M 0 0 L 9 9 M 9 0 L 0 9" Stroke="{DynamicResource MutedTextBrush}" StrokeThickness="1.4" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Background="{StaticResource PanelBrush}" Margin="18,14,18,8" CornerRadius="0" Padding="15,11">
+            <Grid x:Name="SettingsPanel">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.1*" />
+                    <ColumnDefinition Width="0.9*" />
+                    <ColumnDefinition Width="1.1*" />
+                    <ColumnDefinition Width="0.55*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Margin="0,0,12,0">
+                    <TextBlock Text="Times Gate IP" Style="{StaticResource FieldLabelStyle}" />
+                    <TextBox x:Name="DeviceIpTextBox" Padding="10,7" AutomationProperties.Name="Times Gate IP" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Margin="0,0,12,0">
+                    <TextBlock Text="Local token" Style="{StaticResource FieldLabelStyle}" />
+                    <PasswordBox x:Name="TokenPasswordBox" Padding="10,7" AutomationProperties.Name="Local token" />
+                    <TextBlock x:Name="TokenValidationTextBlock"
+                               Text="LocalToken is required"
+                               Foreground="{DynamicResource TextBrush}"
+                               FontSize="9"
+                               Margin="2,3,0,0"
+                               Visibility="Collapsed" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Margin="0,0,12,0">
+                    <TextBlock Text="PC · LAN IP" Style="{StaticResource FieldLabelStyle}" />
+                    <TextBox x:Name="ServeIpTextBox" Padding="10,7" AutomationProperties.Name="This PC LAN IP" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Margin="0,0,12,0">
+                    <TextBlock Text="Brightness" Style="{StaticResource FieldLabelStyle}" />
+                    <TextBox x:Name="BrightnessTextBox" Padding="10,7" AutomationProperties.Name="Brightness" Text="70" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="4" VerticalAlignment="Bottom" Margin="6,0,0,2">
+                    <TextBlock Text="HTTP :8765" Foreground="{StaticResource SubtleTextBrush}" FontFamily="Consolas" FontSize="11" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" Margin="18,9,18,12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="DASHBOARD" FontWeight="Bold" FontSize="13" />
+                    <TextBlock Text="  ·  choose one widget for each physical screen" Foreground="{StaticResource SubtleTextBrush}" FontSize="12" />
+                </StackPanel>
+                
+            </Grid>
+
+            <UniformGrid x:Name="ActiveScreensPanel" Grid.Row="1" Columns="5" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        </Grid>
+
+        <Border Grid.Row="3" Background="{StaticResource DeepBrush}" Padding="18,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="FooterTitleTextBlock" Text="Create a dashboard or restore a saved layout" FontWeight="SemiBold" FontSize="12" />
+                    <TextBlock x:Name="FooterDetailTextBlock" Text="Apply All sends all five screens and waits for each LCD." Foreground="{StaticResource SubtleTextBrush}" FontSize="11" Margin="0,3,0,0" />
+                </StackPanel>
+
+                <Button Grid.Column="1" x:Name="ResetButton" Content="Clear all" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,10,0" VerticalAlignment="Center" Click="ResetButton_Click" />
+                <Button Grid.Column="2" x:Name="ApplySelectedButton" Content="Apply screen" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,10,0" VerticalAlignment="Center" Click="ApplySelectedButton_Click" />
+                <Button Grid.Column="3" x:Name="ApplyButton" Content="Apply all" Style="{StaticResource PrimaryButtonStyle}" VerticalAlignment="Center" Click="ApplyButton_Click" />
+            </Grid>
+        </Border>
+
+
+    </Grid>
+            <Grid x:Name="ModalOverlay" Panel.ZIndex="1000" Background="{DynamicResource WindowBrush}" Visibility="Collapsed"
+                  KeyboardNavigation.TabNavigation="Cycle" MouseLeftButtonDown="ModalOverlay_BackgroundClick">
+                <Border x:Name="ModalCard" MaxWidth="790" Margin="20,18" Background="{DynamicResource WindowBrush}"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseLeftButtonDown="ModalCard_MouseLeftButtonDown">
+                    <Grid>
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                        <Grid Margin="0,0,0,16">
+                            <StackPanel Margin="0,0,44,0">
+                                <TextBlock x:Name="ModalTitleTextBlock" Text="Select widget" FontWeight="Bold" FontSize="20"/>
+                                <TextBlock x:Name="ModalSubtitleTextBlock" Foreground="{DynamicResource MutedTextBrush}" FontSize="14" Margin="0,12,0,0"/>
+                            </StackPanel>
+                            <Button x:Name="ModalCloseButton" Content="×" Width="34" Height="34" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                    AutomationProperties.Name="Close dialog" Style="{StaticResource SecondaryButtonStyle}" Padding="0" FontSize="20" Click="ModalCloseButton_Click"/>
+                        </Grid>
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel x:Name="ModalContentPanel"/>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+            </Grid>
+    </Grid></Border></Window>

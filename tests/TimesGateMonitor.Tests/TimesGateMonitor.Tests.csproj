@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <UseWPF>true</UseWPF>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\TimesGateMonitor.App\TimesGateMonitor.App.csproj" />
+    <ProjectReference Include="..\..\src\TimesGateMonitor.Core\TimesGateMonitor.Core.csproj" />
+    <ProjectReference Include="..\..\src\TimesGateMonitor.Hardware\TimesGateMonitor.Hardware.csproj" />
+    <ProjectReference Include="..\..\src\TimesGateMonitor.Rendering\TimesGateMonitor.Rendering.csproj" />
+    <ProjectReference Include="..\..\src\TimesGateMonitor.TimesGate\TimesGateMonitor.TimesGate.csproj" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+</Project>

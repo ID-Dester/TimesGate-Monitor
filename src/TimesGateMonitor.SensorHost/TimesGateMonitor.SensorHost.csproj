@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>TGm.SensorHost</AssemblyName>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TimesGateMonitor.Core\TimesGateMonitor.Core.csproj" />
+    <ProjectReference Include="..\TimesGateMonitor.Hardware\TimesGateMonitor.Hardware.csproj" />
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+</Project>

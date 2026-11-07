@@ -1,0 +1,32 @@
+# .NET / IDE output
+**/bin/
+**/obj/
+.vs/
+TestResults/
+*.user
+*.suo
+
+# Generated builds and diagnostics
+**/artifacts/
+release/
+diagnostics/
+diagnostic-frames/
+hardware-frames/
+*.log
+*.dmp
+
+# Superseded local icon drafts (the v2 assets are the public application icon)
+src/TimesGateMonitor.App/Assets/TimesGateMonitor-tgm.png
+src/TimesGateMonitor.App/Assets/TimesGateMonitor-tgm.ico
+
+# Workspace-local SDK and package caches
+.dotnet-cli/
+.nuget-packages/
+.local-packages/
+.sandbox-appdata/
+
+# User and OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tmp

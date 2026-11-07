@@ -1,0 +1,63 @@
+name: Bug report
+description: Report a reproducible TGm problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve TGm. Never paste your LocalToken. Use **gear icon → EXPORT DIAGNOSTICS** and inspect the sanitized archive before attaching it. For a Times Gate restart or a display returning to the stock clock face, use the dedicated restart form instead.
+  - type: input
+    id: version
+    attributes:
+      label: TGm version
+      placeholder: 0.1.0-preview.1
+    validations:
+      required: true
+  - type: dropdown
+    id: windows
+    attributes:
+      label: Windows version
+      options:
+        - Windows 11
+        - Windows 10
+        - Other / unsupported
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the expected result and the actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open ...
+        2. Select ...
+        3. Click ...
+    validations:
+      required: true
+  - type: checkboxes
+    id: environment
+    attributes:
+      label: Environment
+      options:
+        - label: Fan Control was running
+        - label: A VPN was running
+        - label: Extended CPU sensor access was enabled
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Sanitized diagnostics
+      description: Drag the ZIP exported by TGm here. Do not attach it if it still contains information you consider private.
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Privacy confirmation
+      options:
+        - label: I confirmed that this report contains no LocalToken or other credentials.
+          required: true

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore TimesGateMonitor.sln --locked-mode
+
+      - name: Build
+        run: dotnet build TimesGateMonitor.sln -c Release --no-restore
+
+      - name: Run unit-test harness
+        run: dotnet run --project tests/TimesGateMonitor.Tests -c Release --no-build

@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version without the v prefix
+        required: true
+        default: 0.1.0-preview.1
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Resolve version
+        id: version
+        shell: pwsh
+        run: |
+          $value = if ('${{ github.event_name }}' -eq 'workflow_dispatch') {
+            '${{ inputs.version }}'
+          } else {
+            '${{ github.ref_name }}'.TrimStart('v')
+          }
+          "value=$value" >> $env:GITHUB_OUTPUT
+
+      - name: Build and test
+        shell: pwsh
+        run: |
+          dotnet restore TimesGateMonitor.sln --locked-mode
+          dotnet build TimesGateMonitor.sln -c Release --no-restore
+          dotnet run --project tests/TimesGateMonitor.Tests -c Release --no-build
+
+      - name: Build portable release
+        shell: pwsh
+        run: ./scripts/Build-Release.ps1 -Version '${{ steps.version.outputs.value }}'
+
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup --no-progress -y
+
+      - name: Build installer
+        shell: pwsh
+        run: >-
+          & 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+          "/DMyAppVersion=${{ steps.version.outputs.value }}"
+          "/DSourceDir=..\release\TGm-${{ steps.version.outputs.value }}-win-x64"
+          '.\installer\TGm.iss'
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TGm-${{ steps.version.outputs.value }}-win-x64
+          path: |
+            release/*.zip
+            release/*.sha256
+            release/*-setup.exe
+          if-no-files-found: error
+
+      - name: Create GitHub prerelease
+        if: github.event_name == 'push'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create '${{ github.ref_name }}'
+          release/*.zip
+          release/*.sha256
+          release/*-setup.exe
+          --generate-notes
+          --prerelease
+          --title 'TGm ${{ steps.version.outputs.value }}'

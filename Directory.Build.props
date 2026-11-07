@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <InformationalVersion>0.1.0-preview.1</InformationalVersion>
+    <Authors>TGm contributors</Authors>
+    <Product>TGm</Product>
+    <Copyright>Copyright © 2026 TGm contributors</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,83 @@
+name: Times Gate restart / display reset
+description: Report a long-session restart, stock clock face, missing LCD or corrupted Network Text
+title: "[Device reset]: "
+labels: [bug, hardware]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        TGm has a known intermittent long-session issue documented in `docs/KNOWN-ISSUES.md`. The roughly 35,000-request observation is a correlation, not a proven device threshold. Never paste your LocalToken. Export diagnostics from **gear icon → EXPORT DIAGNOSTICS** and inspect the archive before attaching it.
+  - type: input
+    id: tgm-version
+    attributes:
+      label: TGm version
+      placeholder: 0.1.0-preview.1
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Times Gate firmware version
+      description: Copy the version shown by the official Divoom app, or write Unknown.
+    validations:
+      required: true
+  - type: input
+    id: duration
+    attributes:
+      label: Approximate session duration before the event
+      placeholder: 8 hours 35 minutes
+    validations:
+      required: true
+  - type: input
+    id: interval
+    attributes:
+      label: TGm minimum refresh interval
+      placeholder: 5 seconds
+    validations:
+      required: true
+  - type: dropdown
+    id: affected
+    attributes:
+      label: Affected displays
+      options:
+        - All five LCDs
+        - One LCD
+        - Several, but not all LCDs
+        - Unknown
+    validations:
+      required: true
+  - type: checkboxes
+    id: symptoms
+    attributes:
+      label: Observed symptoms
+      options:
+        - label: Corrupted, shifted or incomplete text appeared first
+        - label: An LCD showed `err at jsondecode!`
+        - label: A stock Divoom clock face appeared
+        - label: Times Gate temporarily stopped responding on the LAN
+        - label: TGm restored the dashboard automatically
+        - label: Manual Apply all was required
+  - type: textarea
+    id: sequence
+    attributes:
+      label: Event sequence
+      description: Describe what appeared first, how long the stock face remained and how recovery occurred.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Network and power environment
+      description: Include Wi-Fi or Ethernet path, VPN/firewall status, power adapter and cable if known. Do not include credentials or public IPs.
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Sanitized diagnostics
+      description: Attach the ZIP exported after the event. If available, mention the request counter shown in the heartbeat journal. Do not attach a raw LocalToken.
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Privacy confirmation
+      options:
+        - label: I inspected the report and confirmed that it contains no LocalToken or other credentials.
+          required: true
