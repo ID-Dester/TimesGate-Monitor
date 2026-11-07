@@ -24,7 +24,7 @@ jobs:
           global-json-file: global.json
 
       - name: Restore
-        run: dotnet restore TimesGateMonitor.sln --locked-mode
+        run: dotnet restore TimesGateMonitor.sln --locked-mode -r win-x64
 
       - name: Build
         run: dotnet build TimesGateMonitor.sln -c Release --no-restore
